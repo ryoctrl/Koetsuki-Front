@@ -1,26 +1,43 @@
 import React, { Component } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
-import CircleMapper from '../../../stores/mappers/CircleMapper';
+import { Grid } from '@material-ui/core';
+
+import CircleMapper from '~/src/stores/mappers/CircleMapper';
+import CircleCard from '~/src/components/common/CircleCard';
 
 class CircleList extends Component {
     render() {
-        const { circles } = this.props;
+        const { classes, circles } = this.props;
         return (
-            <div>
+            <Grid container justify="space-around" className={classes.list} spacing={10}>
                 {
                     circles.map(circle => (
-                        <li key={circle.id}>
-                            <Link to={`/circles/${circle.id}`}>{circle.name}</Link>
-                        </li>
+                        <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
+                            <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
+                        </Grid>
                     ))
                 }
-            </div>
+            </Grid>
         )
     }
 }
 
-export default connect(CircleMapper)(CircleList);
+
+const styles = theme => ({
+    card: {
+        width: '100%',
+    },
+    list: {
+        paddingTop: '5px'
+    }
+});
+
+CircleList = withStyles(styles)(CircleList);
+CircleList = connect(CircleMapper)(CircleList);
+
+export default CircleList;
