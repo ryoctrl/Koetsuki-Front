@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom';
 import CircleList from './CircleList';
 import CircleDetail from './CircleDetail';
 
-import CircleMapper from '../../../stores/mappers/CircleMapper';
+import CircleMapper from '~/src/stores/mappers/CircleMapper';
 
 const CIRCLES = [{"id":1,"name":"のらくら劇場","penName":"トロメラ","spaceName":"A-01","createdAt":"2019-04-20T11:59:56.000Z","updatedAt":"2019-04-20T11:59:56.000Z"},{"id":2,"name":"スリーズ","penName":"チェリ子","spaceName":"A-02","createdAt":"2019-04-20T12:05:45.000Z","updatedAt":"2019-04-20T12:05:45.000Z"}];
 
