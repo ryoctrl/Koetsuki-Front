@@ -19,9 +19,13 @@ class Circles extends Component {
         console.log(circles);
         return (
             <div>
-                <h2>Circles</h2>
                 <Route exact path='/circles' component={CircleList}/>
-                <Route path='/circles/:id' render={({match}) => <CircleDetail circleById={circleById} match={match}/>}/>
+                <Route 
+                    path='/circles/:id' 
+                    render={({match}) => (
+                        <CircleDetail circleById={circleById} match={match}/>
+                    )}
+                    />
             </div>
         )
     }

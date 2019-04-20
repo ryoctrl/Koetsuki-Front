@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+
+import { getChangePageAction } from '~/src/stores/actions/PageAction';
 
 const styles = {
     root: {
@@ -21,6 +24,9 @@ class FooterMenu extends Component {
     }
 
     handleChange = (e, value) => {
+        const page = this.props.pages[value];
+        const action = getChangePageAction(page);
+        this.props.dispatch(action);
         this.setState({value});
     }
 
@@ -47,4 +53,8 @@ class FooterMenu extends Component {
     }
 }
 
-export default withStyles(styles)(FooterMenu);
+FooterMenu = connect(s => s)(FooterMenu);
+FooterMenu = withStyles(styles)(FooterMenu);
+
+export default FooterMenu;
+

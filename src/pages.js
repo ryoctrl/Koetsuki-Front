@@ -10,18 +10,21 @@ import Settings from './components/ContentPages/Settings/Settings';
 
 const PAGES = [
     {
+        title: 'サークルリスト',
         label: 'Circles',
         path: '/circles',
         icon: (<RestoreIcon />),
         component: Circles 
     },
     {
+        title: 'お気に入り',
         label: 'Favorites',
         path: '/favorites',
         icon: (<FavoriteIcon />),
         component: Favorites,
     },
     {
+        title: '設定',
         label: 'Settings',
         path: '/settings',
         icon: (<LocationOnIcon/>),

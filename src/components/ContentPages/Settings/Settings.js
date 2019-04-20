@@ -4,8 +4,7 @@ class Settings extends Component {
     render() {
         return (
             <div>
-                <h2>Settings</h2>
-                <p>設定</p>
+                <p>設定ページ</p>
             </div>
         )
     }
