@@ -14,7 +14,7 @@ class CircleList extends Component {
     render() {
         const { classes, circles } = this.props;
         return (
-            <Grid container justify="space-around" className={classes.list} spacing={10}>
+            <Grid container justify="space-around" className={classes.list}>
                 {
                     circles.map(circle => (
                         <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, /*Button, IconButton*/ } from '@material-ui/core';
 
 const styles = {
     root: {
@@ -16,7 +16,6 @@ const styles = {
 class HeaderMenu extends Component {
     render() {
         const { classes, page } = this.props;
-        console.log(page);
         return (
             <div className={classes.root}>
                 <AppBar position="static">

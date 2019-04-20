@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, IconButton } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import { Favorite } from '@material-ui/icons';
+import CircleMapper from '~/src/stores/mappers/CircleMapper';
+
 
 const IMAGE_PATH = process.env.REACT_APP_API_HOST + 'images/';
 
@@ -13,15 +18,16 @@ const styles = {
 };
 
 class CircleCard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { classes, circle } = this.props;
+        const { classes, circle, favorites } = this.props;
         let img;
         if(!circle.image) img = '/img/no-image.svg';
         else img = IMAGE_PATH + circle.image;
+
+        const faved = favorites.find(f => f.id === circle.id);
+
+        const favColor = typeof(faved) !== 'undefined'  ? 'secondary' : 'default';
+
         return (
             <Card>
                 <CardActionArea component={Link} to={`/circles/${circle.id}`}>
@@ -29,6 +35,9 @@ class CircleCard extends Component {
                     <CardContent>
                         <Typography variant="subtitle1" component="h2">
                             {circle.name}
+                            <IconButton color={favColor} className={classes.button} component="span">
+                                <Favorite />
+                            </IconButton>
                         </Typography>
                         <Typography variant="body1" component="h2">
                             {circle.penName}
@@ -43,4 +52,5 @@ class CircleCard extends Component {
     }
 }
 
+CircleCard = connect(CircleMapper)(CircleCard);
 export default withStyles(styles)(CircleCard);

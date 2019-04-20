@@ -23,7 +23,6 @@ const store = createStore(
 
 store.dispatch(getCircles());
 
-
 const theme = createMuiTheme({
     typography: {
         useNextVariants: true,

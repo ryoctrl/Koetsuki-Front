@@ -1,13 +1,40 @@
 import React, { Component } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
+
+import { connect } from 'react-redux';
+import CircleMapper from '~/src/stores/mappers/CircleMapper';
+
+import { Link } from 'react-router-dom';
+
+import { Grid } from '@material-ui/core';
+
+import CircleCard from '~/src/components/common/CircleCard';
+
 class Favorites extends Component {
     render() {
+        const { classes, favorites } = this.props;
         return (
-            <div>
-                <p>お気に入りサークルリストページ</p>
-            </div>
+            <Grid container justify="space-around" className={classes.list}>
+                {favorites.map(fav => (
+                    <Grid key={fav.id} item xs={6} lg={3} className={classes.card}>
+                        <CircleCard component={Link} to={`/circles/${fav.id}`} circle={fav} />
+                    </Grid>
+                ))}
+            </Grid>
         )
     }
 }
 
-export default Favorites;
+const styles = theme => ({
+    card: {
+        width: '100%'
+    },
+    list: {
+        paddingTop: '5px'
+    }
+});
+
+Favorites = withStyles(styles)(Favorites);
+
+export default connect(CircleMapper)(Favorites);

@@ -1,4 +1,8 @@
-import { GET_CIRCLES_REQUEST, GET_CIRCLES_SUCCESS, GET_CIRCLES_FAILURE } from '../actions/CircleAction';
+import { 
+    GET_CIRCLES_REQUEST, 
+    GET_CIRCLES_SUCCESS, 
+    GET_CIRCLES_FAILURE,
+} from '../actions/CircleAction';
 
 const initState = {
     isFetching: false,
