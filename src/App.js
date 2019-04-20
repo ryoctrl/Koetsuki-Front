@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 
+import Contents from './components/Contents';
+import FooterMenu from './components/FooterMenu';
+
+import PAGES from './pages';
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <Contents pages={PAGES} />
+                <FooterMenu pages={PAGES} />
+            </div>
+        );
+    }
 }
 
 export default App;
