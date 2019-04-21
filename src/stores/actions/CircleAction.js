@@ -24,6 +24,14 @@ const getCirclesFailure = (error) => {
     }
 };
 
+export const SEARCH_CIRCLE = 'SERCH_CIRCLE';
+export const getSearchAction = (options) => {
+    return {
+        type: SEARCH_CIRCLE,
+        options
+    }
+}
+
 export const getCircles = () => {
     return (dispatch) => {
         dispatch(getCirclesRequest());

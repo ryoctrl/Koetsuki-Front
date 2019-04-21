@@ -22,7 +22,6 @@ import { purple, orange, green, pink, blue, yellow } from '@material-ui/core/col
 // react-router
 import { BrowserRouter } from 'react-router-dom';
 
-//import './index.css';
 import App from './App';
 
 // redux, persist initialize
@@ -42,7 +41,7 @@ const store = createStore(
 
 const pstore = persistStore(store);
 
-store.dispatch(getCircles());
+//store.dispatch(getCircles());
 
 // theme initialize
 

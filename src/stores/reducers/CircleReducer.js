@@ -2,11 +2,12 @@ import {
     GET_CIRCLES_REQUEST, 
     GET_CIRCLES_SUCCESS, 
     GET_CIRCLES_FAILURE,
+    SEARCH_CIRCLE,
 } from '../actions/CircleAction';
 
 const initState = {
     isFetching: false,
-    circles: []
+    circles: [],
 };
 
 const circles = (state=[initState], action) => {
@@ -36,8 +37,46 @@ const circles = (state=[initState], action) => {
                     error: action.error
                 }
             ];
+        case SEARCH_CIRCLE:
+            return searchCircle(state, action);
         default:
             return state
+    }
+}
+
+const searchCircle = (state, action) => {
+    const options = action.options;
+    const circles = getFetchedCircles(state);
+    let results = circles;
+    //サークル名検索
+    if(options.name) {
+        results = results.filter(c => {
+            return c.name.indexOf(options.name) !== -1;
+        });
+    }
+
+    //ペンネーム検索
+    if(options.penName) {
+        results = results.filter(c => {
+            return c.penName.indexOf(options.penName) !== -1;
+        });
+    }
+
+    return [
+        ...state,
+        {
+            isFetching: false,
+            circles: circles,
+            results: results
+        }
+    ]
+};
+
+const getFetchedCircles = (states) => {
+    states = states.reverse();
+    for(const state of states) {
+        if(!state.hasOwnProperty('lastUpdated')) continue;
+        return state.circles;
     }
 }
 

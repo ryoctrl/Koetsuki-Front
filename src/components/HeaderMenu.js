@@ -6,6 +6,8 @@ import { AppBar, Toolbar, Typography, Button/*, IconButton*/ } from '@material-u
 
 import { SearchRounded as SearchIcon } from '@material-ui/icons';
 
+import SearchModal from '~/src/components/modals/SearchModal';
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -22,8 +24,21 @@ const styles = theme => ({
 });
 
 class HeaderMenu extends Component {
-    onClickSearch() {
-        console.log('lick');
+    constructor (props) {
+        super(props);
+        this.state = {
+            open: false,
+        }
+    }
+    handleClose = () => {
+        this.setState({
+            open: false
+        });
+    }
+    onClickSearch = () => {
+        this.setState({
+            open: true
+        });
     }
     render() {
         let { classes, page, pages, location } = this.props;
@@ -41,6 +56,10 @@ class HeaderMenu extends Component {
                                 <SearchIcon />
                             </Button>
                         )}
+                        {page.page.searchable && (
+                            <SearchModal open={this.state.open} handleClose={this.handleClose}/>
+                        )}
+
                     </Toolbar>
                 </AppBar>
             </div>
