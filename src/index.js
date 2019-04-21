@@ -16,15 +16,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 // theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { purple, orange, green, pink, blue, yellow } from '@material-ui/core/colors';
+//purple:500, orange:700, green:600, pink:500, blue: 500, yellow:500
 
 // react-router
 import { BrowserRouter } from 'react-router-dom';
 
-import './index.css';
+//import './index.css';
 import App from './App';
 
-import axios from 'axios';
-
+// redux, persist initialize
 const persistConfig = {
     key: 'koetuki',
     storage,
@@ -41,12 +42,18 @@ const store = createStore(
 
 const pstore = persistStore(store);
 
-
-axios.get('/api/notif');
-
 store.dispatch(getCircles());
 
+// theme initialize
+
 const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: purple[500],
+            //main: orange[700],
+        },
+        type: 'light',
+    },
     typography: {
         useNextVariants: true,
     }
