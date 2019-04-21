@@ -1,8 +1,10 @@
 import React from 'react';
 
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { 
+    ListRounded as ListIcon, 
+    FavoriteRounded as FavoriteIcon, 
+    SettingsRounded as SettingsIcon 
+} from '@material-ui/icons';
 
 import Circles from './components/ContentPages/Circles/Circles';
 import Favorites from './components/ContentPages/Favorites/Favorites';
@@ -15,14 +17,16 @@ const PAGES = [
         label: 'Top',
         path: '/',
         exact: true,
-        component: Top
+        component: Top,
+        searchable: false,
     },
     {
         title: 'サークルリスト',
         label: 'Circles',
         path: '/circles',
-        icon: (<RestoreIcon />),
-        component: Circles 
+        icon: (<ListIcon />),
+        component: Circles,
+        searchable: true,
     },
     {
         title: 'お気に入り',
@@ -30,13 +34,16 @@ const PAGES = [
         path: '/favorites',
         icon: (<FavoriteIcon />),
         component: Favorites,
+        searchable: true,
     },
     {
         title: '設定',
         label: 'Settings',
         path: '/settings',
-        icon: (<LocationOnIcon/>),
-        component: Settings
+        icon: (<SettingsIcon />),
+        component: Settings,
+        searchable: false,
+
     },
 ]
 

@@ -23,7 +23,6 @@ class FavoriteButton extends Component {
     render() {
         const { classes, circle, favorites } = this.props;
         let favColor, favorited;
-        console.log(this.state);
         if(this.state.hasOwnProperty('fav')) {
             favColor = this.state.fav ? 'secondary' : 'default';
             favorited = this.state.fav;
@@ -42,7 +41,13 @@ class FavoriteButton extends Component {
 }
 
 const styles = theme => ({
-
+    button: {
+        margin: 0,
+        height: 20,
+        width: 20,
+        paddingBottom: theme.spacing.unit * 2,
+        float: 'right',
+    }
 });
 
 FavoriteButton = withStyles(styles)(FavoriteButton);

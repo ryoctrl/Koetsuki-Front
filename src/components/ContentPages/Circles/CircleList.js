@@ -25,7 +25,7 @@ class CircleList extends Component {
 
         }
         return (
-            <Grid container justify="space-around" className={classes.list}>
+            <Grid container className={classes.list} spacing={24}>
                 {
                     circles.map(circle => (
                         <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>

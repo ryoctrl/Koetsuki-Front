@@ -15,7 +15,7 @@ class Favorites extends Component {
     render() {
         const { classes, favorites } = this.props;
         return (
-            <Grid container justify="space-around" className={classes.list}>
+            <Grid container spacing={24}>
                 {favorites.map(fav => (
                     <Grid key={fav.id} item xs={6} lg={3} className={classes.card}>
                         <CircleCard component={Link} to={`/circles/${fav.id}`} circle={fav} />
@@ -30,9 +30,6 @@ const styles = theme => ({
     card: {
         width: '100%'
     },
-    list: {
-        paddingTop: '5px'
-    }
 });
 
 Favorites = withStyles(styles)(Favorites);
