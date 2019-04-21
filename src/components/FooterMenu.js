@@ -24,7 +24,8 @@ class FooterMenu extends Component {
     }
 
     handleChange = (e, value) => {
-        const page = this.props.pages[value];
+        console.log('onchange!!');
+        const page = this.props.pages[value + 1];
         const action = getChangePageAction(page);
         this.props.dispatch(action);
         this.setState({value});

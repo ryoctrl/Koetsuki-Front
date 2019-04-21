@@ -9,10 +9,21 @@ import { Grid } from '@material-ui/core';
 
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import CircleCard from '~/src/components/common/CircleCard';
+import { getCircles } from '~/src/stores/actions/CircleAction';
 
 class CircleList extends Component {
+    constructor(props) {
+        super(props);
+        this.props.dispatch(getCircles());
+    }
     render() {
-        const { classes, circles } = this.props;
+        let { classes, circles } = this.props;
+        if(!circles) {
+            return (
+                <p>サークルが1件もないか取得できませんでした...</p>
+            )
+
+        }
         return (
             <Grid container justify="space-around" className={classes.list}>
                 {

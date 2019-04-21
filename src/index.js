@@ -23,20 +23,26 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 
+import axios from 'axios';
+
 const persistConfig = {
     key: 'koetuki',
     storage,
+    blacklist: ['circles', 'page'],
+    whitelist: ['favorites'],
 }
 
 const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const store = createStore(
     persistedRootReducer,
-    //RootReducer,
     applyMiddleware(thunk, logger)
 );
 
 const pstore = persistStore(store);
+
+
+axios.get('/api/notif');
 
 store.dispatch(getCircles());
 

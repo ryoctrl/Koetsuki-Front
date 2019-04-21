@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <HeaderMenu />
+                <HeaderMenu pages={PAGES} />
                 <Contents pages={PAGES} />
                 <FooterMenu pages={PAGES} />
             </div>
