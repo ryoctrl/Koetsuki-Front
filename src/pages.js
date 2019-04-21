@@ -7,8 +7,16 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Circles from './components/ContentPages/Circles/Circles';
 import Favorites from './components/ContentPages/Favorites/Favorites';
 import Settings from './components/ContentPages/Settings/Settings';
+import Top from './components/ContentPages/Top/Top';
 
 const PAGES = [
+    {
+        title: 'トップ',
+        label: 'Top',
+        path: '/',
+        exact: true,
+        component: Top
+    },
     {
         title: 'サークルリスト',
         label: 'Circles',

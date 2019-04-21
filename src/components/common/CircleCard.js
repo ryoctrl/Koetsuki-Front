@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { Favorite } from '@material-ui/icons';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 
+import FavoriteButton from './FavoriteButton';
+
 
 const IMAGE_PATH = process.env.REACT_APP_API_HOST + 'images/';
 
@@ -35,9 +37,12 @@ class CircleCard extends Component {
                     <CardContent>
                         <Typography variant="subtitle1" component="h2">
                             {circle.name}
+                            <FavoriteButton circle={circle}/>
+        {/*
                             <IconButton color={favColor} className={classes.button} component="span">
                                 <Favorite />
                             </IconButton>
+                            */}
                         </Typography>
                         <Typography variant="body1" component="h2">
                             {circle.penName}

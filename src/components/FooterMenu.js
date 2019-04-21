@@ -40,7 +40,7 @@ class FooterMenu extends Component {
                 showLabels
                 className={classes.root}>
 
-                {pages.map(page => (
+                {pages.filter(page => typeof(page.icon) !== 'undefined').map(page => (
                     <BottomNavigationAction
                         component={Link}
                         key={page.label}

@@ -7,7 +7,7 @@ class Contents extends Component {
         return (
             <div>
                 {pages.map(page => (
-                    <Route key={page.path} path={page.path}  component={page.component} />
+                    <Route exact={page.exact} key={page.path} path={page.path} component={page.component} />
                 ))}
             </div>
         )
