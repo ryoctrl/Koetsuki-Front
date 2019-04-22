@@ -3,19 +3,22 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
+import CircleDetail from './CircleDetail';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import CircleCard from '~/src/components/common/CircleCard';
 import { getCircles } from '~/src/stores/actions/CircleAction';
+import { checkAuth } from '~/src/stores/actions/UserAction';
 
 import moment from 'moment';
 
 class CircleList extends Component {
     constructor(props) {
         super(props);
+        //this.props.dispatch(checkAuth());
         if(this.props.circlesUpdatedAt) {
             const ts = moment(this.props.circlesUpdatedAt);
             const now = moment();
@@ -36,9 +39,11 @@ class CircleList extends Component {
                 <Grid container className={classes.list} spacing={24}>
                     {
                         results.map(circle => (
-                            <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
-                                <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
-                            </Grid>
+                            <div>
+                                <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
+                                    <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
+                                </Grid>
+                            </div>
                         ))
                     }
                 </Grid>

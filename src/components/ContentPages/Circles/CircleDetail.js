@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
 
-import FavoriteButton from '~/src/components/common/FavoriteButton';
+import { getCircles } from '~/src/stores/actions/CircleAction';
+
+import DetailDisplay from './DetailDisplay';
+import DetailEdit from './DetailEdit';
 
 class CircleDetail extends Component {
+    componentDidMount() {
+        if(!this.props.circlesUpdatedAt) this.props.dispatch(getCircles());
+    }
+
     render() {
         const { id } = this.props.match.params;
-        const { classes, circles } = this.props;
+        const { circles } = this.props;
         const circle = circles.find(circle => circle.id === Number(id));
         if(typeof circle === 'undefined') {
             return (
@@ -21,17 +28,9 @@ class CircleDetail extends Component {
         }
 
         return (
-            <div className={classes.root}>
-                <Typography variant="h5">
-                    {circle.name}
-                    <FavoriteButton circle={circle}/>
-                </Typography>
-                <Typography variant="h5">
-                    {circle.penName} {circle.twitter ? '@'+circle.twitter : ''}
-                </Typography>
-                <Typography variant="h6">
-                    スペース: {circle.spaceName}
-                </Typography>
+            <div>
+                <Route exact path='/circles/:id' render={() => <DetailDisplay circle={circle} />}/>
+                <Route path='/circles/:id/edit' render={() => <DetailEdit circle={circle} />} />
             </div>
         )
     }
