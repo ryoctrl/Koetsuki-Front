@@ -9,7 +9,7 @@ import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import FavoriteButton from './FavoriteButton';
 
 
-const IMAGE_PATH = process.env.REACT_APP_API_HOST + 'images/';
+const IMAGE_PATH = process.env.REACT_APP_API_HOST + '/api/images/';
 
 const styles = theme => ({
     media: {
@@ -23,10 +23,10 @@ const styles = theme => ({
 
 class CircleCard extends Component {
     render() {
-        const { classes, circle, favorites } = this.props;
+        const { classes, circle } = this.props;
         let img;
-        if(!circle.image) img = '/img/no-image.svg';
-        else img = IMAGE_PATH + circle.image;
+        if(!circle.circleCut) img = '/img/no-image.svg';
+        else img = IMAGE_PATH + circle.circleCut;
 
         return (
             <Card>

@@ -7,6 +7,7 @@ import CircleEditor from '~/src/components/common/CircleEditor';
 
 class DetailEdit extends Component {
     render() {
+        console.log('detail edit rendering');
         const { classes, circle } = this.props;
         return (
             <div className={classes.root}>

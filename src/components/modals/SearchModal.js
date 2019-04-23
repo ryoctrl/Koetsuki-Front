@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Modal, Button, Typography, TextField } from '@material-ui/core';
+import { Modal, Typography, TextField } from '@material-ui/core';
 
 import { connect } from 'react-redux';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';

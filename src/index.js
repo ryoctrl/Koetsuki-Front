@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 
 // redux
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+//import logger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import RootReducer from './stores/reducers/RootReducer';
-import { getCircles } from './stores/actions/CircleAction';
 
 // redux-persist
 import { persistStore, persistReducer } from 'redux-persist';
@@ -16,7 +15,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 // theme
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, orange, green, pink, blue, yellow } from '@material-ui/core/colors';
+import { purple,/* orange, green, pink, blue, yellow*/ } from '@material-ui/core/colors';
 //purple:500, orange:700, green:600, pink:500, blue: 500, yellow:500
 
 // react-router
@@ -28,15 +27,15 @@ import App from './App';
 const persistConfig = {
     key: 'koetuki',
     storage,
-    blacklist: ['circles', 'page'],
-    whitelist: ['favorites'],
+    blacklist: ['page'],
+    whitelist: ['circles', 'favorites'],
 }
 
 const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const store = createStore(
     persistedRootReducer,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk/*, logger*/)
 );
 
 const pstore = persistStore(store);
@@ -49,7 +48,6 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             main: purple[500],
-            //main: orange[700],
         },
         type: 'light',
     },

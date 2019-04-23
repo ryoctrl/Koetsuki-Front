@@ -1,20 +1,24 @@
-import moment from 'moment';
-
 const CircleMapper = (state) => {
+    const storeCircles = state.circles[0] || null;
+    let circles = [];
+    let lastUpdated = false;
+    if(storeCircles) {
+        circles = storeCircles.circles;
+        lastUpdated = storeCircles.lastUpdated;
+    }     
     const currentState = state.circles[state.circles.length - 1];
+    const user = [].concat(state.user);
+    user.reverse();
     const returnObj = {
-        circles: currentState.circles,
+        circles: circles,
+        isFetching: currentState.isFetching,
+        lastUpdated: lastUpdated,
         page: state.page.page,
         favorites: state.favorites.favorites,
+        user: user[0]
     }
 
-    if(currentState.results) returnObj.results = currentState.results;
-    const fetches = state.circles.reverse();
-    for(const fetchd of fetches) {
-        if(!fetchd.lastUpdated) continue;
-        returnObj.circlesUpdatedAt = fetchd.lastUpdated;
-        break;
-    }
+    if(storeCircles.results) returnObj.results = storeCircles.results;
     return returnObj;
 }
 

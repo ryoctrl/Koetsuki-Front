@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 
-import CircleDetail from './CircleDetail';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import CircleCard from '~/src/components/common/CircleCard';
 import { getCircles } from '~/src/stores/actions/CircleAction';
@@ -18,9 +17,9 @@ import moment from 'moment';
 class CircleList extends Component {
     constructor(props) {
         super(props);
-        //this.props.dispatch(checkAuth());
-        if(this.props.circlesUpdatedAt) {
-            const ts = moment(this.props.circlesUpdatedAt);
+        this.props.dispatch(checkAuth());
+        if(this.props.lastUpdated) {
+            const ts = moment(this.props.lastUpdated);
             const now = moment();
             const diffSec = now.diff(ts, 'seconds');
             if(diffSec < 30) return;
@@ -28,39 +27,31 @@ class CircleList extends Component {
         this.props.dispatch(getCircles());
     }
     render() {
-        let { classes, circles, results } = this.props;
+        let { classes, circles, isFetching, results } = this.props;
+        let displayingCircles = circles;
+        let nonCirclesMessage = 'サークルが1件もないか取得できませんでした...';
         if(results) {
-            if(results.length === 0) {
+            displayingCircles = results;
+            nonCirclesMessage = 'サークルが1件も見つかりませんでした...';
+        }
+
+        if(displayingCircles.length === 0) {
+            if(isFetching) {
                 return (
-                    <p>サークルが1件も見つかりませんでした...</p>
+                    <CircularProgress className={classes.progress} color="primary"/>
+                )
+            } else {
+                return (
+                    <p>{nonCirclesMessage}</p>
                 )
             }
-            return (
-                <Grid container className={classes.list} spacing={24}>
-                    {
-                        results.map(circle => (
-                            <div>
-                                <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
-                                    <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
-                                </Grid>
-                            </div>
-                        ))
-                    }
-                </Grid>
-            )
-        }
-        if(!circles) {
-            return (
-                <p>サークルが1件もないか取得できませんでした...</p>
-            )
-
         }
         return (
             <Grid container className={classes.list} spacing={24}>
                 {
-                    circles.map(circle => (
+                    displayingCircles.map(circle => (
                         <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
-                            <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
+                            <CircleCard key={circle.id} component={Link} to={`/circles/${circle.id}`} circle={circle} />
                         </Grid>
                     ))
                 }
@@ -76,7 +67,18 @@ const styles = theme => ({
     },
     list: {
         paddingTop: '5px'
+    },
+    progress: {
+        position: 'absolute',
+        top: '0px',
+        right: '0px',
+        left: '0px',
+        bottom: '0px',
+        margin: 'auto',
+        width: theme.spacing.unit * 8,
+        height: theme.spacing.unit * 8,
     }
+
 });
 
 CircleList = withStyles(styles)(CircleList);

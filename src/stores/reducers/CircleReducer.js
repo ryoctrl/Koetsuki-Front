@@ -22,7 +22,6 @@ const circles = (state=[initState], action) => {
             ];
         case GET_CIRCLES_SUCCESS:
             return [
-                ...state,
                 {
                     isFetching: false,
                     circles: action.circles,
@@ -46,7 +45,8 @@ const circles = (state=[initState], action) => {
 
 const searchCircle = (state, action) => {
     const options = action.options;
-    const circles = getFetchedCircles(state);
+    const prevState = getFetchedCircles(state);
+    const circles = prevState.circles;
     let results = circles;
     //サークル名検索
     if(options.name) {
@@ -63,11 +63,11 @@ const searchCircle = (state, action) => {
     }
 
     return [
-        ...state,
         {
             isFetching: false,
             circles: circles,
-            results: results
+            results: results,
+            lastUpdated: prevState.lastUpdated
         }
     ]
 };
@@ -76,7 +76,7 @@ const getFetchedCircles = (states) => {
     states = states.reverse();
     for(const state of states) {
         if(!state.hasOwnProperty('lastUpdated')) continue;
-        return state.circles;
+        return state;
     }
 }
 

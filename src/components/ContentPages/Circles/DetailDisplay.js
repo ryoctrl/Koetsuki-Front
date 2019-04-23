@@ -7,6 +7,7 @@ import GoodsGridList from '~/src/components/common/GoodsGridList';
 
 class DetailDisplay extends Component {
     render() {
+        console.log('detail display rendering!');
         const { classes, circle } = this.props;
         return (
             <div className={classes.root}>
@@ -15,7 +16,7 @@ class DetailDisplay extends Component {
                     <FavoriteButton circle={circle}/>
                 </Typography>
                 <Typography variant="h5">
-                    {circle.penName} {circle.twitter ? '@'+circle.twitter : ''}
+        {circle.penName} {circle.twitter ? <a href={'https://twitter.com/' + circle.twitter}>{'@'+circle.twitter}</a> : ''}
                 </Typography>
                 <Typography variant="h6">
                     スペース: {circle.spaceName}
