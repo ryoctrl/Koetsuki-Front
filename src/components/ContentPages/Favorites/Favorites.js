@@ -11,12 +11,23 @@ import { Grid } from '@material-ui/core';
 
 import CircleCard from '~/src/components/common/CircleCard';
 
+import { getFav } from '~/src/stores/actions/FavoriteAction';
+
 class Favorites extends Component {
+    constructor(props) {
+        super(props);
+        this.props.dispatch(getFav(this.props.favorites, this.props.user));
+    }
     render() {
-        const { classes, favorites } = this.props;
+        const { classes, circles, favorites } = this.props;
+        const displayCircles = [];
+        for(const fav of favorites) {
+            const c = circles.filter(c => c.id === fav.circleId);
+            if(c && c[0]) displayCircles.push(c[0]);
+        }
         return (
             <Grid container spacing={24}>
-                {favorites.map(fav => (
+                {displayCircles.map(fav => (
                     <Grid key={fav.id} item xs={6} lg={3} className={classes.card}>
                         <CircleCard component={Link} to={`/circles/${fav.id}`} circle={fav} />
                     </Grid>

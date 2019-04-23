@@ -83,6 +83,9 @@ class CircleList extends Component {
             }
         }
 
+        const s = {
+            height: this.state.height * displayingCircles.length / this.state.rowCount
+        };
         displayingCircles = displayingCircles.slice(0, this.state.index);
         return (
             <Grid container className={classes.list} spacing={24}>

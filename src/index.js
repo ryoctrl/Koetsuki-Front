@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // redux
 import thunk from 'redux-thunk';
-//import logger from 'redux-logger';
+import logger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import RootReducer from './stores/reducers/RootReducer';
@@ -20,6 +20,7 @@ import { purple,/* orange, green, pink, blue, yellow*/ } from '@material-ui/core
 
 // react-router
 import { BrowserRouter } from 'react-router-dom';
+import ScrollToTop from '~/src/components/common/ScrollToTop';
 
 import App from './App';
 
@@ -35,7 +36,7 @@ const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const store = createStore(
     persistedRootReducer,
-    applyMiddleware(thunk/*, logger*/)
+    applyMiddleware(thunk, logger)
 );
 
 const pstore = persistStore(store);
@@ -61,7 +62,9 @@ const Application = () => (
         <Provider store={store}>
             <PersistGate loading={<p>loading...</p>} persistor={pstore}>
                 <BrowserRouter>
-                    <App />
+                    <ScrollToTop>
+                        <App />
+                    </ScrollToTop>
                 </BrowserRouter>
             </PersistGate>
         </Provider>

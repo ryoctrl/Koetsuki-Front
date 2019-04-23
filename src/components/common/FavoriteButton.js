@@ -4,33 +4,44 @@ import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 import { Favorite } from '@material-ui/icons';
-import { getChangeFavoriteAction } from '~/src/stores/actions/FavoriteAction';
+import { getChangeFavoriteAction, createFav, deleteFav } from '~/src/stores/actions/FavoriteAction';
 
 class FavoriteButton extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.changeFavorite = this.changeFavorite.bind(this);
     }
-    changeFavorite(e,currentFavorited) {
+
+    changeFavorite = (e, favorited) => {
         e.preventDefault();
-        const action = getChangeFavoriteAction(this.circle);
+        const favorite = this.props.favorites.filter(f => f.circleId === this.props.circle.id);
+        const circle = this.props.circle;
+
+        //Testing
+        if(favorited && favorite.length > 0) {
+            this.props.dispatch(deleteFav(favorite[0].id, circle.id))
+        } else {
+            const user = this.props.user.user || { id: -1 } ;
+            this.props.dispatch(createFav(user.id, circle.id));
+        }
+        //Testing
+            /*
+        const action = getChangeFavoriteAction(this.props.circle);
         this.props.dispatch(action);
         this.setState({
-            fav: !currentFavorited
+            fav: !favorited
         });
+        */
     }
     render() {
         const { classes, circle, favorites } = this.props;
-        let favColor, favorited;
-        if(this.state.hasOwnProperty('fav')) {
-            favColor = this.state.fav ? 'secondary' : 'default';
-            favorited = this.state.fav;
-        } else {
-            favorited = typeof(favorites.find(f => f.id === circle.id)) !== 'undefined';
-            this.circle = circle;
-            favColor = favorited ? 'secondary' : 'default';
+        const favorite = favorites.filter(f => f.circleId === circle.id);
+        let favColor = 'default', favorited = false;
+        if(favorite.length > 0) {
+            favColor = 'secondary';
+            favorited = true;
         }
+
         return (
             <IconButton color={favColor} 
                 onClick={(e) => this.changeFavorite(e, favorited)} className={classes.button} component="span">
