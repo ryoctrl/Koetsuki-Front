@@ -17,6 +17,12 @@ import moment from 'moment';
 class CircleList extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            index: 12,
+            rowCount: 4,
+            height: 339,
+            base: 12
+        }
         this.props.dispatch(checkAuth());
         if(this.props.lastUpdated) {
             const ts = moment(this.props.lastUpdated);
@@ -25,6 +31,36 @@ class CircleList extends Component {
             if(diffSec < 30) return;
         }
         this.props.dispatch(getCircles());
+    }
+
+    componentDidMount() {
+        this.onScrollEvents = e => {
+            this.watchCurrentPosition();
+        }
+        window.addEventListener('scroll', this.onScrollEvents, true);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScrollEvents);
+    }
+
+    watchCurrentPosition() {
+        const rowCount = this.state.rowCount;
+        const height = this.state.height;
+        const base = this.state.base;
+        const index = Math.max(base, Math.ceil(this.scrollTop() / height) * rowCount) + 12;
+        if(this.state.index > index) return;
+        this.setState({
+            index
+        });
+    }
+
+    scrollTop() {
+        return Math.max(
+            window.pageYOffset,
+            document.documentElement.scrollTop,
+            document.body.scrollTop
+        );
     }
     render() {
         let { classes, circles, isFetching, results } = this.props;
@@ -46,12 +82,14 @@ class CircleList extends Component {
                 )
             }
         }
+
+        displayingCircles = displayingCircles.slice(0, this.state.index);
         return (
             <Grid container className={classes.list} spacing={24}>
                 {
                     displayingCircles.map(circle => (
                         <Grid key={circle.id} item xs={6} lg={3} className={classes.card}>
-                            <CircleCard key={circle.id} component={Link} to={`/circles/${circle.id}`} circle={circle} />
+                            <CircleCard component={Link} to={`/circles/${circle.id}`} circle={circle} />
                         </Grid>
                     ))
                 }
