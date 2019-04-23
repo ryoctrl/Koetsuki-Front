@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button/*, IconButton*/ } from '@material-ui/core';
+import { AppBar, Avatar,  Toolbar, Typography, Button/*, IconButton*/ } from '@material-ui/core';
 
 import { EditRounded as EditIcon, SearchRounded as SearchIcon } from '@material-ui/icons';
 
@@ -21,6 +21,10 @@ const styles = theme => ({
     },
     rightGrow: {
         marginLeft: theme.spacing.unit * 8,
+        flexGrow: 1
+    },
+    rightWithIconGrow: {
+        marginLeft: theme.spacing.unit * 4,
         flexGrow: 1
     },
     grow: {
@@ -71,16 +75,18 @@ class HeaderMenu extends Component {
         let editable = (page.page && page.page.editable) || false;
         editable = editable && user.authed;
         const title = page.page === undefined ? 'NoTitle' :page.page.title;
+        const icon = user.authed ? user.user.iconUrl ? user.user.iconUrl : false : false;
 
         return (
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
+                        {icon && (<Avatar alt={user.user.name} src={icon} />)}
                         <Typography 
                             variant="h6" 
                             align="center" 
                             color="inherit" 
-                            className={searchable || editable ? classes.rightGrow : classes.grow}>
+                            className={(searchable || editable) ? icon ? classes.rightWithIconGrow : classes.rightGrow : classes.grow}>
                             {title}
                         </Typography>
                         {searchable && (
