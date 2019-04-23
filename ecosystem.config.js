@@ -6,7 +6,7 @@ module.exports = {
           args: "start",
           env: {
               PORT: 1504,
-              REACT_APP_API_HOST: 'https://koetuki-back.mosin.jp/',
+              REACT_APP_API_HOST: 'https://koetsuki.mosin.jp/',
           }
       }
   ]
