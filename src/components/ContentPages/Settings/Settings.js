@@ -3,6 +3,10 @@ import { Button, Typography, FormControlLabel, Radio } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Twitter from '~/src/icons/Twitter';
 import { orange/*, green, pink, blue, yellow */} from '@material-ui/core/colors';
+import { connect } from 'react-redux';
+import CircleMapper from '~/src/stores/mappers/CircleMapper';
+import { checkAuth } from '~/src/stores/actions/UserAction';
+
 
 class Settings extends Component {
     constructor(props) {
@@ -10,6 +14,7 @@ class Settings extends Component {
         this.state = {
             theme: 'yukari'
         }
+        this.props.dispatch(checkAuth());
     }
     onChangeColor = (e) => {
         this.setState({
@@ -26,7 +31,7 @@ class Settings extends Component {
                 <Typography align="center" className={classes.messages}>
                     <Button className={classes.button}>
                         <Twitter />
-                        <a className={classes.a} href="/api/auth/twitter">
+                        <a className={classes.a} href={'/api/auth/twitter'}>
                             Twitterでサインアップ/ログイン
                         </a>
                     </Button>
@@ -103,4 +108,5 @@ const styles = theme => ({
     }
 });
 
+Settings = connect(CircleMapper)(Settings);
 export default withStyles(styles)(Settings);

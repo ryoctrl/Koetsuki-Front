@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const API_HOST = process.env.REACT_APP_API_HOST;
-
 export const GET_CIRCLES_REQUEST = 'GET_CIRCLES_REQUEST';
 const getCirclesRequest = () => {
     return {
@@ -69,7 +67,7 @@ export const createCircleFailure = (error) => {
 export const getCircles = () => {
     return (dispatch) => {
         dispatch(getCirclesRequest());
-        return axios.get(API_HOST + '/api/circles')
+        return axios.get('/api/circles')
             .then(res => dispatch(getCirclesSuccess(res.data)))
             .catch(err => dispatch(getCirclesFailure(err)))
     };
@@ -77,7 +75,7 @@ export const getCircles = () => {
 
 export const createCircle = () => {
     return (dispatch) => {
-        return axios.post(API_HOST + '/api/circles/create')
+        return axios.post('/api/circles/create')
             .then(res => dispatch(createCircleSuccess(res.data)))
             .catch(err => dispatch(createCircleFailure(err)))
     };
@@ -85,7 +83,7 @@ export const createCircle = () => {
 
 export const updateCircle = (data) => {
     return (dispatch) => {
-        return axios.post(API_HOST + '/api/circles/update', data, {
+        return axios.post('/api/circles/update', data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

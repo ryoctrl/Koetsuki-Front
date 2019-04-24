@@ -12,11 +12,13 @@ import { Grid } from '@material-ui/core';
 import CircleCard from '~/src/components/common/CircleCard';
 
 import { getFav } from '~/src/stores/actions/FavoriteAction';
+import { checkAuth } from '~/src/stores/actions/UserAction';
 
 class Favorites extends Component {
     constructor(props) {
         super(props);
         this.props.dispatch(getFav(this.props.favorites, this.props.user));
+        this.props.dispatch(checkAuth());
     }
     render() {
         const { classes, circles, results, favorites } = this.props;

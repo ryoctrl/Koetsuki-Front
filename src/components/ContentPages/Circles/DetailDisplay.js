@@ -7,7 +7,6 @@ import GoodsGridList from '~/src/components/common/GoodsGridList';
 
 class DetailDisplay extends Component {
     render() {
-        console.log('detail display rendering!');
         const { classes, circle } = this.props;
         return (
             <div className={classes.root}>

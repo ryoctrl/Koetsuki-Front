@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Modal, Typography, TextField } from '@material-ui/core';
+import { Modal, Typography, TextField, Select, MenuItem, InputLabel, Input } from '@material-ui/core';
 
 import { connect } from 'react-redux';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import { getSearchAction } from '~/src/stores/actions/CircleAction';
+
+const spaces = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S', 'あ', 'い','う','え','お'];
 
 class SearchModal extends Component {
     constructor(props) {
@@ -12,6 +14,9 @@ class SearchModal extends Component {
         this.state = {
             name: '',
             penName: '',
+            space: '',
+            sortTarget: 'id',
+            sortLogic: 'asc',
         }
     }
 
@@ -36,19 +41,78 @@ class SearchModal extends Component {
                         検索
                     </Typography>
                     <div>
-                        <TextField 
-                            label="サークル名で検索" 
-                            className={classes.textField}
-                            value={this.state.name}
-                            onChange={this.changeField('name')}
-                            margin="normal"/>
-                        <TextField 
-                            label="ペンネームで検索" 
-                            className={classes.textField}
-                            value={this.state.penName}
-                            onChange={this.changeField('penName')}
-                            margin="normal"/>
+                        <div className={classes.inputDiv}>
+                            <TextField 
+                                label="サークル名で検索" 
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.changeField('name')}
+                                margin="normal"/>
+                        </div>
+                        <div className={classes.inputDiv}>
+                            <TextField 
+                                label="ペンネームで検索" 
+                                className={classes.textField}
+                                value={this.state.penName}
+                                onChange={this.changeField('penName')}
+                                margin="normal"/>
+                        </div>
+                        <div className={classes.inputDiv}>
+                            <InputLabel shrink htmlFor="space-search" className={classes.labelS}>
+                                スペース記号で検索
+                            </InputLabel>
+                            <Select 
+                                className={classes.textField}
+                                value={this.state.space}
+                                onChange={this.changeField('space')}
+                                input={<Input name="space" id="space-search"/>}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {spaces.map(s => <MenuItem key={s} value={s}>{s}</MenuItem>)};
+                            </Select>
+                        </div>
                     </div>
+                    <Typography variant="h6" align="center" className={classes.menuTitle}>
+                        ソート
+                    </Typography>
+                    <div>
+                        <div className={classes.inputDiv}>
+                            <InputLabel shrink htmlFor="sort-target" className={classes.labelS}>
+                                ソート対象項目
+                            </InputLabel>
+                            <Select
+                                className={classes.textField}
+                                value={this.state.sortTarget}
+                                onChange={this.changeField('sortTarget')}
+                                input={<Input name="sort-target" id="sort-target"/>}>
+                                <MenuItem value="id">
+                                    <em>default</em>
+                                </MenuItem>
+        {/*
+                                <MenuItem value="name">サークル名</MenuItem>
+                                <MenuItem value="pen">ペンネーム</MenuItem>
+                                <MenuItem value="space">スペース記号</MenuItem>
+                                */}
+                            </Select>
+                        </div>
+                        <div className={classes.inputDiv}>
+                            <InputLabel shrink htmlFor="sort-logic" className={classes.labelS}>
+                                ソート方法
+                            </InputLabel>
+                            <Select
+                                className={classes.textField}
+                                value={this.state.sortLogic}
+                                onChange={this.changeField('sortLogic')}
+                                input={<Input name="sort-logic" id="sort-logic"/>}>
+                                <MenuItem value="asc">昇順</MenuItem>
+                                <MenuItem value="desc">降順</MenuItem>
+                            </Select>
+                        </div>
+
+                    </div>
+
                 </div>
             </Modal>
         )
@@ -63,16 +127,43 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit,
         outline: 'none',
         margin: '0 auto',
-        top: '35%',
-        height: '30%',
-        left: '25%',
-        width: '50%',
+        top: '27.5%',
+        height: '45%',
+        left: '40%',
+        width: '20%',
         borderRadius: 10,
+        [theme.breakpoints.down('lg')]: {
+            left: '10%',
+            width: '80%',
+            height: '65%',
+            top: '17.5%',
+        }
+    },
+    inputDiv: {
+        display: 'block',
+        marginLeft: theme.spacing.unit * 3,
+        [theme.breakpoints.down('lg')]: {
+            marginLeft: theme.spacing.unit * 0.8
+
+        }
     },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
+        width: theme.spacing.unit * 40,
+        [theme.breakpoints.down('lg')]: {
+            width: '93%',
+        }
     },
+    labelS: {
+        display: 'block',
+        width: '50%',
+        marginTop: theme.spacing.unit * 2,
+        marginLeft: theme.spacing.unit,
+    },
+    menuTitle: {
+        marginTop: theme.spacing.unit
+    }
 });
 
 

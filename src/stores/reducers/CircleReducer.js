@@ -17,7 +17,7 @@ const circles = (state=[initState], action) => {
                 ...state,
                 {
                     isFetching: true,
-                    circles: []
+                    circles: [],
                 }
             ];
         case GET_CIRCLES_SUCCESS:
@@ -43,6 +43,7 @@ const circles = (state=[initState], action) => {
     }
 }
 
+
 const searchCircle = (state, action) => {
     const options = action.options;
     const prevState = getFetchedCircles(state);
@@ -61,6 +62,32 @@ const searchCircle = (state, action) => {
             return c.penName.indexOf(options.penName) !== -1;
         });
     }
+
+    if(options.space) {
+        results = results.filter(c => {
+            return c.spaceName.startsWith(options.space);
+        });
+    }
+
+    let algo;
+    switch(options.sortTarget) {
+        case 'id':
+            algo = (a, b) => options.sortLogic === 'asc' ? a.id - b.id : b.id - a.id;
+            break;
+        case 'name':
+            algo = (a, b) => a.name - b.name;
+            break;
+        case 'pen':
+            algo = (a, b) => a.penName - b.penName;
+            break;
+        case 'space':
+            algo = (a, b) => a.space - b.space;
+            break;
+        default:
+            break;
+    }
+
+    results.sort(algo);
 
     return [
         {

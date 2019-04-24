@@ -22,7 +22,7 @@ class Top extends Component {
                     <Typography align="center" className={classes.messages}>
                         <Button className={classes.button}>
                             <Twitter />
-                            <a className={classes.a} href="/api/auth/twitter">
+                            <a className={classes.a} href={'/api/auth/twitter'}>
                                 Twitterでサインアップ/ログイン
                             </a>
                         </Button>

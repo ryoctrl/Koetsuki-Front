@@ -9,7 +9,7 @@ import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import FavoriteButton from './FavoriteButton';
 
 
-const IMAGE_PATH = process.env.REACT_APP_API_HOST + '/api/images/';
+const IMAGE_PATH = '/api/images/';
 
 const styles = theme => ({
     media: {

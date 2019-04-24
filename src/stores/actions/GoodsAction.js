@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { getCircles } from './CircleAction';
 
-const API_HOST = process.env.REACT_APP_API_HOST;
-
 export const CREATE_GOODS_REQUEST = 'CREATE_GOODS_REQUEST';
 const createGoodsRequest = () => {
     return {
@@ -63,7 +61,7 @@ export const createGoods = (data) => {
 export const updateGoods = (data) => {
     console.log(data);
     return (dispatch) => {
-        return axios.post(API_HOST + '/api/goods/update', data, {
+        return axios.post('/api/goods/update', data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

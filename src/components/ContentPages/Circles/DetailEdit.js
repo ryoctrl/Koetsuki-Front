@@ -38,7 +38,7 @@ class DetailEdit extends Component {
                 <Typography variant="body1" align="center">
                     頒布物を追加
                 </Typography>
-                <GoodsEditor circle={circle} form={'goods' + new Date().getTime() + '-form'}/>
+                <GoodsEditor circle={circle} form={'goodsnew-form'} initialValues={{}}/>
             </div>
         )
     }

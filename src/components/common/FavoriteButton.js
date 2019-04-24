@@ -4,7 +4,7 @@ import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 import { Favorite } from '@material-ui/icons';
-import { getChangeFavoriteAction, createFav, deleteFav } from '~/src/stores/actions/FavoriteAction';
+import { createFav, deleteFav } from '~/src/stores/actions/FavoriteAction';
 
 class FavoriteButton extends Component {
     constructor(props) {

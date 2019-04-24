@@ -18,10 +18,7 @@ import CircleMapper from '~/src/stores/mappers/CircleMapper';
 
 class GoodsEditor extends Component {
     submit = (values) => {
-        console.log(values);
         const file = values['goodsimage-' + this.props.form];
-        console.log('goodsimage-' + this.props.form);
-        console.log(file);
         const params = new FormData();
         params.append('name', values.name);
         params.append('price', values.price);
@@ -34,12 +31,14 @@ class GoodsEditor extends Component {
             params.append('circleId', this.circle.id); 
             this.props.createGoods(params);
         }
+
+        this.props.reset();
     }
 
     render() {
         const { classes, handleSubmit, submitting, circle, goods, form} = this.props;
         this.circle = circle;
-        this.goods = goods;
+        if(goods) this.goods = goods;
 
         return (
             <form onSubmit={handleSubmit(this.submit)} encType="multipart/form-data">

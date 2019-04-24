@@ -1,5 +1,4 @@
 import axios from 'axios';
-const API_HOST = process.env.REACT_APP_API_HOST;
 
 export const CHANGE_FAVORITE = 'ADD_FAVORITE';
 export const getChangeFavoriteAction = (circle) => {
@@ -27,7 +26,7 @@ const createFavFailure = (favorite) => {
 
 export const createFav = (uid, cid) => {
     return (dispatch) => {
-        return axios.post(API_HOST + 'api/favorites/create', {uid, cid})
+        return axios.post('/api/favorites/create', {uid, cid})
                 .then(res => dispatch(createFavSuccess(res.data)))
             .catch(err => {
                 dispatch(createFavFailure({userId: uid, circleId: cid}))
@@ -53,7 +52,7 @@ const deleteFavFailure = (favorite) => {
 
 export const deleteFav = (favId, cid) => {
     return (dispatch) => {
-        return axios.post(API_HOST + 'api/favorites/delete', {id: favId})
+        return axios.post('/api/favorites/delete', {id: favId})
                 .then(res => dispatch(deleteFavSuccess(res.data)))
                 .catch(err => {
                     dispatch(deleteFavFailure({id: favId, circleId: cid}))
@@ -80,7 +79,7 @@ const getFavFailure = (err) => {
 
 export const getFav = (currentFavorites, user) => {
     return (dispatch) => {
-        return axios.get(API_HOST + 'api/favorites/')
+        return axios.get('/api/favorites/')
             .then(res => {
                 postFavsIfNeeded(dispatch, currentFavorites, user);
                 dispatch(getFavSuccess(res.data))
