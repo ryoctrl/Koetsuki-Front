@@ -15,7 +15,7 @@ class DetailDisplay extends Component {
                     <FavoriteButton circle={circle}/>
                 </Typography>
                 <Typography variant="h5">
-        {circle.penName} {circle.twitter ? <a href={'https://twitter.com/' + circle.twitter}>{'@'+circle.twitter}</a> : ''}
+                    {circle.penName} {circle.twitter ? <a className={classes.a} href={'https://twitter.com/' + circle.twitter}>{'@'+circle.twitter}</a> : ''}
                 </Typography>
                 <Typography variant="h6">
                     スペース: {circle.spaceName}
@@ -31,6 +31,9 @@ class DetailDisplay extends Component {
 const styles = theme => ({
     root: {
         padding: '5px',
+    },
+    a: {
+        textDecoration: 'none',
     },
     media: {
         height: 0,
