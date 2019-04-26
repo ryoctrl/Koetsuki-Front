@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
+import withWidth from '@material-ui/core/withWidth';
 import { GridList, GridListTile, GridListTileBar, ListSubheader } from '@material-ui/core';
 
 class GoodsGridList extends Component {
@@ -9,7 +9,7 @@ class GoodsGridList extends Component {
         const { classes, circle, width } = this.props;
         let cellHeight = 640, cols = 4;
 
-        if(width != 'xl') {
+        if(width !== 'xl') {
             cellHeight = 320;
             cols = 2;
         }
