@@ -26,8 +26,14 @@ class CircleCard extends Component {
     render() {
         const { classes, circle } = this.props;
         let img;
-        if(!circle.circleCut) img = '/img/no-image.svg';
-        else img = IMAGE_PATH + circle.circleCut;
+        let externalImage = false;
+        if(!circle.circleCut) {
+            img = '/img/no-image.svg';
+        } else if(circle.circleCut.startsWith('http')) {
+            img = circle.circleCut;
+        } else {
+            img = IMAGE_PATH + circle.circleCut;
+        }
 
         return (
             <Card>
