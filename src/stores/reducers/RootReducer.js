@@ -4,6 +4,7 @@ import page from './PageReducer';
 import favorites from './FavoriteReducer';
 import goods from './GoodsReducer';
 import user from './UserReducer';
+import scroll from './ScrollReducer';
 import { reducer as reduxFormReducer } from 'redux-form';
 
 const RootReducer = combineReducers({
@@ -12,6 +13,7 @@ const RootReducer = combineReducers({
     favorites,
     goods,
     user,
+    scroll,
     form: reduxFormReducer
 });
 

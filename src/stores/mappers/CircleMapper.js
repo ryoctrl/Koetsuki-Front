@@ -15,7 +15,8 @@ const CircleMapper = (state) => {
         lastUpdated: lastUpdated,
         page: state.page.page,
         favorites: state.favorites.favorites,
-        user: user[0]
+        user: user[0],
+        scroll: state.scroll
     }
 
     if(storeCircles.results) returnObj.results = storeCircles.results;

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import { Route } from 'react-router-dom';
+
 import HeaderMenu from './components/HeaderMenu';
 import Contents from './components/Contents';
 import FooterMenu from './components/FooterMenu';
+
+import CircleList from './components/ContentPages/Circles/CircleList';
 
 import PAGES from './pages';
 
@@ -15,6 +19,7 @@ class App extends Component {
             <div>
                 <HeaderMenu pages={PAGES} />
                 <div className={classes.content}>
+                    <Route path='/' component={CircleList} />
                     <Contents pages={PAGES} />
                 </div>
                 <FooterMenu pages={PAGES} />
