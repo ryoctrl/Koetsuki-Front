@@ -62,7 +62,7 @@ const createFavFailured = (state, action) => {
 
 const deleteFavSucceeded = (state, action) => {
     const favorite = action.favorite.favorite;
-    const favorites = [].concat(state.favorites).filter(f => f.id !== favorite.id );
+    const favorites = [].concat(state.favorites).filter(f => f.id !== favorite.id);
     return {
         favorites
     }
@@ -70,11 +70,7 @@ const deleteFavSucceeded = (state, action) => {
 
 const deleteFavFailured = (state, action) => {
     const favorite = action.favorite;
-    const favorites = [];
-    for(const f of state.favorites) {
-        if(f.circleId !== favorite.circleId) favorites.push(f);
-        if(f.id !== favorite.id) favorites.push(f);
-    }
+    const favorites = [].concat(state.favorites).filter(f => f.circleId !== favorite.circleId);
 
     return {
         favorites
