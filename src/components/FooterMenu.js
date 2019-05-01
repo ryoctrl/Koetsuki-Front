@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 
@@ -20,8 +20,17 @@ const styles = {
 class FooterMenu extends Component {
     constructor(props) {
         super(props);
+        let val = 0;
+        if(props.location.pathname.indexOf('/circles') !== -1) {
+            val = 0;
+        } else if(props.location.pathname.indexOf('/favorites') !== -1) {
+            val = 1;
+        } else if(props.location.pathname.indexOf('/settings') !== -1) {
+            val = 2;
+        }
+
         this.state = {
-            value: 0,
+            value: val,
         }
     }
 
@@ -56,6 +65,7 @@ class FooterMenu extends Component {
 }
 
 FooterMenu = connect(s => s)(FooterMenu);
+FooterMenu = withRouter(FooterMenu);
 FooterMenu = withStyles(styles)(FooterMenu);
 
 export default FooterMenu;
