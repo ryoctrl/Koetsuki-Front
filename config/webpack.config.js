@@ -24,7 +24,6 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 
-
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -552,7 +551,10 @@ module.exports = function(webpackEnv) {
       isEnvProduction &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true,
+          /*
+          include: [/images\//, /\.png$/, /\.jpg$/, /\.jpeg$/],
           exclude: [/\.map$/, /asset-manifest\.json$/],
+          */
           importWorkboxFrom: 'cdn',
           navigateFallback: publicUrl + '/index.html',
           navigateFallbackBlacklist: [
@@ -561,6 +563,7 @@ module.exports = function(webpackEnv) {
             // Exclude URLs containing a dot, as they're likely a resource in
             // public/ and not a SPA route
             new RegExp('/[^/]+\\.[^/]+$'),
+            new RegExp('/api/'),
           ],
         }),
       // TypeScript type checking

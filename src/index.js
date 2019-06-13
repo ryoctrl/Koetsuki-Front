@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 // redux
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+//import logger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import RootReducer from './stores/reducers/RootReducer';
@@ -24,6 +24,8 @@ import ScrollToTop from '~/src/components/common/ScrollToTop';
 
 import App from './App';
 
+import * as serviceWorker from './serviceWorker';
+
 // redux, persist initialize
 const persistConfig = {
     key: 'koetuki',
@@ -36,15 +38,12 @@ const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const store = createStore(
     persistedRootReducer,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk/*, logger*/)
 );
 
 const pstore = persistStore(store);
 
-//store.dispatch(getCircles());
-
 // theme initialize
-
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -72,3 +71,5 @@ const Application = () => (
 )
 
 ReactDOM.render(<Application /> , document.getElementById('root'));
+
+serviceWorker.register();
