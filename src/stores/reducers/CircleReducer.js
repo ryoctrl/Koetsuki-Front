@@ -74,14 +74,48 @@ const searchCircle = (state, action) => {
         case 'id':
             algo = (a, b) => options.sortLogic === 'asc' ? a.id - b.id : b.id - a.id;
             break;
+        case 'updatedAt':
+            algo = (a, b) => options.sortLogic === 'asc' ? new Date(a.updatedAt) - new Date(b.updatedAt) : new Date(b.updatedAt) - new Date(a.updatedAt);
+            break;
         case 'name':
-            algo = (a, b) => a.name - b.name;
+            algo = (a, b) => {
+                if(options.sortLogic === 'asc') {
+                    if(a.name > b.name) return 1;
+                    else if(a.name < b.name) return -1;
+                    else return 0;
+                } else {
+                    if(b.name > a.name) return 1;
+                    else if(b.name < a.name) return -1;
+                    else return 0;
+                }
+            };
             break;
         case 'pen':
-            algo = (a, b) => a.penName - b.penName;
+            algo = (a, b) => {
+                if(options.sortLogic === 'asc') {
+                    if(a.penName > b.penName) return 1;
+                    else if(a.penName < b.penName) return -1;
+                    else return 0;
+                } else {
+                    if(b.penName > a.penName) return 1;
+                    else if(b.penName < a.penName) return -1;
+                    else return 0;
+                }
+            };
+
             break;
         case 'space':
-            algo = (a, b) => a.space - b.space;
+            algo = (a, b) => {
+                if(options.sortLogic === 'asc') {
+                    if(a.space > b.space) return 1;
+                    else if(a.space < b.space) return -1;
+                    else return 0;
+                } else {
+                    if(b.space > a.space) return 1;
+                    else if(b.space < a.space) return -1;
+                    else return 0;
+                }
+            };
             break;
         default:
             break;

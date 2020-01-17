@@ -90,10 +90,18 @@ class SearchModal extends Component {
                                 <MenuItem value="id">
                                     <em>default</em>
                                 </MenuItem>
-        {/*
-                                <MenuItem value="name">サークル名</MenuItem>
-                                <MenuItem value="pen">ペンネーム</MenuItem>
-                                <MenuItem value="space">スペース記号</MenuItem>
+                                <MenuItem value="updatedAt">
+                                    <em>更新日時</em>
+                                </MenuItem>
+                                <MenuItem value="name">
+                                    <em>サークル名</em>
+                                </MenuItem>
+                                <MenuItem value="pen">
+                                    <em>ペンネーム</em>
+                                </MenuItem>
+                                <MenuItem value="space">
+                                    <em>スペース記号</em>
+                                </MenuItem>
                                 */}
                             </Select>
                         </div>
