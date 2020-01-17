@@ -3,13 +3,15 @@ import React from 'react';
 import { 
     ListRounded as ListIcon, 
     FavoriteRounded as FavoriteIcon, 
-    SettingsRounded as SettingsIcon 
+    SettingsRounded as SettingsIcon,
+    MapRounded as MapIcon,
 } from '@material-ui/icons';
 
 import Circles from './components/ContentPages/Circles/Circles';
 import Favorites from './components/ContentPages/Favorites/Favorites';
 import Settings from './components/ContentPages/Settings/Settings';
 import Top from './components/ContentPages/Top/Top';
+import Map from './components/ContentPages/Map/map';
 
 const PAGES = [
     {
@@ -49,6 +51,15 @@ const PAGES = [
         icon: (<FavoriteIcon />),
         component: Favorites,
         searchable: true,
+        editable: false,
+    },
+    {
+        title: 'マップ',
+        label: 'Map',
+        path: '/map',
+        icon: (<MapIcon />),
+        component: Map,
+        searchable: false,
         editable: false,
     },
     {
