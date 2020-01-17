@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import RootReducer from './stores/reducers/RootReducer';
 
 // redux-persist
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -24,12 +24,23 @@ import ScrollToTop from '~/src/components/common/ScrollToTop';
 
 import App from './App';
 
+const transform = createTransform(
+    (inbound, key) => {
+        if(inbound.length !== 1) return inbound;
+        delete inbound[0].results;
+        return inbound;
+    },
+    store => store,
+    { whitelist: [ 'circles' ]}
+);
+
 // redux, persist initialize
 const persistConfig = {
     key: 'koetuki',
     storage,
     blacklist: ['page'],
     whitelist: ['circles', 'favorites'],
+    transforms: [transform]
 }
 
 const persistedRootReducer = persistReducer(persistConfig, RootReducer);
