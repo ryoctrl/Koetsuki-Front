@@ -10,7 +10,7 @@ class Top extends Component {
         return (
             <div>
                 <Typography variant="h5" align="center">
-                    この声届け、月までも五
+                    この声届け、月までも六
                 </Typography>
                 <div className={classes.messages}>
                     <Typography variant="body1" align="center" className={classes.messages} >

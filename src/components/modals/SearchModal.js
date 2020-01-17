@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import { getSearchAction } from '~/src/stores/actions/CircleAction';
 
-const spaces = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S', 'あ', 'い','う','え','お'];
+const spaces = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S', 'あ', 'い','う','え','お', '痛'];
 
 class SearchModal extends Component {
     constructor(props) {
