@@ -48,7 +48,7 @@ const searchCircle = (state, action) => {
     const options = action.options;
     const prevState = getFetchedCircles(state);
     const circles = prevState.circles;
-    let results = circles;
+    let results = circles.slice();
     //サークル名検索
     if(options.name) {
         results = results.filter(c => {
