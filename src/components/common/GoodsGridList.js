@@ -9,7 +9,7 @@ class GoodsGridList extends Component {
         const { classes, circle, width } = this.props;
         let cellHeight = 640, cols = 4;
 
-        if(width !== 'xl') {
+        if(!['xl', 'lg'].includes(width)) {
             cellHeight = 320;
             cols = 2;
         }
