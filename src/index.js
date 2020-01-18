@@ -25,12 +25,13 @@ import ScrollToTop from '~/src/components/common/ScrollToTop';
 import App from './App';
 
 const transform = createTransform(
-    (inbound, key) => {
-        if(inbound.length !== 1) return inbound;
-        delete inbound[0].results;
-        return inbound;
-    },
     store => store,
+    outbound => {
+        if(outbound.length !== 1) return outbound;
+        delete outbound[0].results;
+        console.log('results deleted!');
+        return outbound;
+    },
     { whitelist: [ 'circles' ]}
 );
 
