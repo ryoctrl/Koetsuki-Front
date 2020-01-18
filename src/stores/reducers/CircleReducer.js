@@ -21,6 +21,15 @@ const circles = (state=[initState], action) => {
                 }
             ];
         case GET_CIRCLES_SUCCESS:
+            action.circles.forEach(circle => {
+                circle.goods.forEach(item => {
+                    if(!item.image) {
+                        item.image = {
+                            path: 'no-image.png',
+                        };
+                    }
+                });
+            });
             return [
                 {
                     isFetching: false,
