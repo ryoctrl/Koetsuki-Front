@@ -108,12 +108,25 @@ const searchCircle = (state, action) => {
             algo = (a, b) => {
                 if(options.sortLogic === 'asc') {
                     if(a.space > b.space) return 1;
-                    else if(a.space < b.space) return -1;
-                    else return 0;
+                    if(a.space < b.space) return -1;
+                    return 0;
                 } else {
                     if(b.space > a.space) return 1;
-                    else if(b.space < a.space) return -1;
-                    else return 0;
+                    if(b.space < a.space) return -1;
+                    return 0;
+                }
+            };
+            break;
+        case 'goods':
+            algo = (a, b) => {
+                if(options.sortLogic === 'asc') {
+                    if(a.goods.length > b.goods.length) return 1;
+                    if(a.goods.length < b.goods.length) return -1;
+                    return 0;
+                } else {
+                    if(b.goods.length > a.goods.length) return 1;
+                    if(b.goods.length < a.goods.length) return -1;
+                    return 0;
                 }
             };
             break;

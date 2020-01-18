@@ -102,7 +102,9 @@ class SearchModal extends Component {
                                 <MenuItem value="space">
                                     <em>スペース記号</em>
                                 </MenuItem>
-                                */}
+                                <MenuItem value="goods">
+                                    <em>登録頒布物数</em>
+                                </MenuItem>
                             </Select>
                         </div>
                         <div className={classes.inputDiv}>
