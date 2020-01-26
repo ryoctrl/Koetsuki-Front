@@ -25,8 +25,10 @@ class FooterMenu extends Component {
             val = 0;
         } else if(props.location.pathname.indexOf('/favorites') !== -1) {
             val = 1;
-        } else if(props.location.pathname.indexOf('/settings') !== -1) {
+        }  else  if(props.location.pathname.indexOf('/map') !== -1) {
             val = 2;
+        }else if(props.location.pathname.indexOf('/settings') !== -1) {
+            val = 3;
         }
 
         this.state = {
