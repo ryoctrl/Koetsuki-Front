@@ -3,15 +3,19 @@ import React, { Component } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Twitter from '~/src/icons/Twitter';
+import Img from 'react-image';
 
 class Top extends Component {
     render() {
         const { classes } = this.props;
         return (
             <div>
+                <Img className={classes.topImage} src="https://koetsuki.mosin.jp/api/images/top.jpg"/>
+                {/*
                 <Typography variant="h5" align="center">
                     この声届け、月までも六
                 </Typography>
+                */}
                 <div className={classes.messages}>
                     <Typography variant="body1" align="center" className={classes.messages} >
                         Twitter認証を行うとサークル情報を編集できるようになります.
@@ -44,6 +48,14 @@ class Top extends Component {
 }
 
 const styles = theme => ({
+    topImage: {
+        display: 'block',
+        margin: '0 auto',
+        width: '100%',
+        [theme.breakpoints.up('lg')]: {
+            width: '45vw',
+        },
+    },
     messages: {
         padding: theme.spacing.unit,
     },
