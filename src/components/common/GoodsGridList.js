@@ -23,7 +23,7 @@ class GoodsGridList extends Component {
         const { classes } = this.props;
         const url = '/api/images/' + goods.image.path;
         if(url.indexOf('no_image') === -1) {
-            return (<Img src={url} alt={goods.name} />);
+            return (<Img className={classes.ReactImage} src={url} alt={goods.name} />);
         }
 
         return (
@@ -94,7 +94,12 @@ const styles = theme => ({
         height: 'auto',
         margin: '0 auto',
         //objectFit: 'cover',
-
+    },
+    ReactImage: {
+        left: '50%',
+        height: '100%',
+        position: 'relative',
+        transform: 'translateX(-50%)',
     }
 });
 
