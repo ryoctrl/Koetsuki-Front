@@ -27,7 +27,7 @@ class CircleCard extends Component {
         const { classes, circle } = this.props;
         let img;
         if(!circle.circleCut) {
-            img = '/img/no-image.svg';
+            img = '/api/images/no_image_480_20200126.png';
         } else if(circle.circleCut.startsWith('http')) {
             img = circle.circleCut;
         } else {
@@ -37,7 +37,7 @@ class CircleCard extends Component {
         return (
             <Card>
                 <CardActionArea component={Link} to={`/circles/${circle.id}`}>
-                    <CardMedia className={classes.media}image={img} title={circle.name}/>
+                    <CardMedia className={classes.media} image={img} title={circle.name}/>
                     <CardContent className={classes.content}>
                         <Typography variant="subtitle2" component="h2">
                             {circle.name}
