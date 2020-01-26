@@ -51,6 +51,7 @@
     "react-dev-utils": "^8.0.0",
     "react-dom": "^16.8.6",
     "react-hammerjs": "^1.0.1",
+    "react-image": "^2.2.2",
     "react-infinite-scroller": "^1.2.4",
     "react-konva": "^16.12.0-0",
     "react-pinch-and-zoom": "^1.2.4",
