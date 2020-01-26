@@ -25,7 +25,7 @@ const circles = (state=[initState], action) => {
                 circle.goods.forEach(item => {
                     if(!item.image) {
                         item.image = {
-                            path: 'no-image.png',
+                            path: 'no_image_480_20200126.png',
                         };
                     }
                 });
