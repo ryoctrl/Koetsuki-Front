@@ -26,18 +26,19 @@ class Settings extends Component {
         return (
             <div>
                 <Typography variant="h6" align="center" className={classes.messages}>
-                    Twitter
+                    - Twitter -
                 </Typography>
                 <Typography align="center" className={classes.messages}>
                     <Button className={classes.button}>
                         <Twitter />
                         <a className={classes.a} href={'/api/auth/twitter'}>
-                            Twitterでサインアップ/ログイン
+                            Twitterで連携
                         </a>
                     </Button>
                 </Typography>
+                {/*
                 <Typography variant="h6" align="center" className={classes.messages}>
-                    ColorTheme(未実装)
+                    - ColorTheme(未実装) -
                 </Typography>
                 <Typography variant="h6" align="center" className={classes.messages}>
                     <FormControlLabel
@@ -63,7 +64,16 @@ class Settings extends Component {
                         label="あかり"
                         labelPlacement="bottom"
                     />
-
+                </Typography>
+                */}
+                <Typography variant="h6" align="center" className={classes.messages}>
+                    - Special Thanks -
+                </Typography>
+                <Typography variant="body" align="center" className={classes.messages}>
+                    No Image 画像提供
+                </Typography>
+                <Typography variant="h6" align="center" className={classes.messages}>
+                    ミルキャラ様(<a className={classes.aLink} href="https://twitter.com/milcara">@milcara</a>)
                 </Typography>
             </div>
         )
@@ -99,6 +109,9 @@ const styles = theme => ({
         '&$checked': {
             color: orange[500],
         },
+    },
+    aLink: {
+        textDecoration: 'none',
     },
     akariChecked: {
         color: orange[700],
