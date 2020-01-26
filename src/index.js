@@ -48,7 +48,7 @@ const persistedRootReducer = persistReducer(persistConfig, RootReducer);
 
 const store = createStore(
     persistedRootReducer,
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk/*, logger*/)
 );
 
 const pstore = persistStore(store);
