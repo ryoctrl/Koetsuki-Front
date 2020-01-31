@@ -9,7 +9,9 @@ const url = 'https://koetsuki-dev.mosin.jp/koetsuki_roku_circlemap.pdf';
 
 let renderTask = null;
 
-const TIMES = 2;
+const TIMES = 3;
+
+const MINIMUM_SCALE = 0.05;
 
 
 class Map extends Component {
@@ -34,7 +36,8 @@ class Map extends Component {
     updateViewPort = (width, height) => {
         if(this.state.mapWidth === width && this.state.mapHeight === height) return;
         this.setState({
-            mapWidth: width,
+            //mapWidth: width,
+            mapWidth: window.innerWidth,
             mapHeight: height
         });
     };
@@ -45,6 +48,11 @@ class Map extends Component {
 
     getResource = async () => {
         if(!url) return;
+
+        const img = new Image();
+        img.onload = () => {
+            this.setState({ img });
+        };
 
         if(/pdf$/.test(url)) {
             const pdf = await PDFJS.getDocument(url);
@@ -59,26 +67,11 @@ class Map extends Component {
             cv.width = width;
             this.updateViewPort(width, height);
             await page.render({ canvasContext: context, viewport }).promise
-
-            const img = new Image();
-            img.onload = () => {
-                this.setState({
-                    img,
-                });
-            };
             img.src = cv.toDataURL();
-        } else {
-            await new Promise(resolve => {
-                const img = new Image();
-                img.onload = () => {
-                    this.setState({
-                        img,
-                    });
-                    resolve();
-                };
-                img.src = url;
-            });
+            return;
         }
+
+        img.src = url;
     }
 
     fillFavorites = resizeRatio => {
@@ -107,15 +100,17 @@ class Map extends Component {
             y: e.center.y / oldScale.y - stage.y() / oldScale.y,
         };
 
-        const newScale = e.scale;
+        const diff = this.state.previousScale - e.scale;
+        const newScale = Math.max(MINIMUM_SCALE, oldScale.y - diff);
 
         const newState = {
             scale: newScale,
+            previousScale: e.scale,
             x: -(mousePointTo.x - e.center.x / newScale) * newScale,
             y: -(mousePointTo.y - e.center.y / newScale) * newScale
         };
         this.setState(newState);
-            };
+    };
 
     onPinchMove = e => {
         const { deltaX, deltaY } = e;
@@ -131,6 +126,7 @@ class Map extends Component {
      */
     onPinchStart = e => {
         this.setState({
+            previousScale: 1,
             prevX: this.state.x,
             prevY: this.state.y
         });
@@ -171,7 +167,7 @@ class Map extends Component {
             y: stage.getPointerPosition().y / oldScale.y - stage.y() / oldScale.y,
         };
 
-        const newScale = e.evt.deltaY > 0 ? oldScale.y / scaleBy : oldScale.y * scaleBy;
+        const newScale = Math.max(MINIMUM_SCALE, e.evt.deltaY > 0 ? oldScale.y / scaleBy : oldScale.y * scaleBy);
 
         this.setState({
             scale: newScale,
@@ -199,7 +195,7 @@ class Map extends Component {
         <Hammer
             onPinch={this.onPinch}
             onPinchStart={this.onPinchStart}
-            onPinchMove={this.onPinchMove}
+            /*onPinchMove={this.onPinchMove}*/
 
             onPan={this.onPan}
             onPanStart={this.onPanStart}
@@ -208,7 +204,7 @@ class Map extends Component {
             <div>
                 <Stage ref="stage" onWheel={this.handleWheel} scale={{ x: this.state.scale, y: this.state.scale }}x={this.state.x} y={this.state.y} width={this.state.mapWidth} height={this.state.mapHeight}>
                     <Layer>
-                        <ImageKonva image={this.state.img}  space="fill"/>
+                        <ImageKonva image={this.state.img} space="fill"/>
                     </Layer>
                 </Stage>
             </div>
