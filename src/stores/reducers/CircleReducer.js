@@ -115,13 +115,26 @@ const searchCircle = (state, action) => {
             break;
         case 'space':
             algo = (a, b) => {
+                const aData = a.spaceName.split('-');
+                const bData = b.spaceName.split('-');
+                if(aData.length !== 2 || bData.length !== 2) return 0;
+
+                const aMark = aData[0];
+                const aNumber = aData[1].length === 2 ? aData[1] : aData[1].substr(0, 2);
+                const bMark = bData[0];
+                const bNumber = bData[1].length === 2 ? bData[1] : bData[1].substr(0, 2);
+
                 if(options.sortLogic === 'asc') {
-                    if(a.space > b.space) return 1;
-                    if(a.space < b.space) return -1;
+                    if(aMark > bMark) return 1;
+                    if(aMark < bMark) return -1;
+                    if(aNumber > bNumber) return 1;
+                    if(aNumber < bNumber) return -1;
                     return 0;
                 } else {
-                    if(b.space > a.space) return 1;
-                    if(b.space < a.space) return -1;
+                    if(bMark > aMark) return 1;
+                    if(bMark < aMark) return -1;
+                    if(bNumber > aNumber) return 1;
+                    if(bNumber < aNumber) return -1;
                     return 0;
                 }
             };
