@@ -8,6 +8,14 @@ import { getSearchAction } from '~/src/stores/actions/CircleAction';
 
 const spaces = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S', 'あ', 'い','う','え','お', '痛'];
 
+const DEFAULT_SORT_LOGIC = {
+    space: 'asc',
+    updatedAt: 'desc',
+    name: 'asc',
+    pen: 'asc',
+    goods: 'desc',
+}
+
 class SearchModal extends Component {
     constructor(props) {
         super(props);
@@ -15,14 +23,19 @@ class SearchModal extends Component {
             name: '',
             penName: '',
             space: '',
-            sortTarget: 'id',
+            sortTarget: 'space',
             sortLogic: 'asc',
         }
     }
 
     changeField = fieldName => event => {
         const newState = Object.assign({}, this.state);
-        newState[fieldName] = event.target.value;
+        const val = event.target.value;
+        newState[fieldName] = val;
+        if(fieldName === 'sortTarget') {
+            const defaultLogic = DEFAULT_SORT_LOGIC[val];
+            newState.sortLogic = defaultLogic;
+        }
         this.props.dispatch(getSearchAction(newState));
         this.setState(newState);
     }
@@ -87,8 +100,8 @@ class SearchModal extends Component {
                                 value={this.state.sortTarget}
                                 onChange={this.changeField('sortTarget')}
                                 input={<Input name="sort-target" id="sort-target"/>}>
-                                <MenuItem value="id">
-                                    <em>default</em>
+                                <MenuItem value="space">
+                                    <em>default(スペース記号)</em>
                                 </MenuItem>
                                 <MenuItem value="updatedAt">
                                     <em>更新日時</em>
@@ -98,9 +111,6 @@ class SearchModal extends Component {
                                 </MenuItem>
                                 <MenuItem value="pen">
                                     <em>ペンネーム</em>
-                                </MenuItem>
-                                <MenuItem value="space">
-                                    <em>スペース記号</em>
                                 </MenuItem>
                                 <MenuItem value="goods">
                                     <em>登録頒布物数</em>
