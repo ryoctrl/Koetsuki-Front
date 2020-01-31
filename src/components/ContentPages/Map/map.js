@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Text } from 'react-konva';
+import { Stage, Layer, Text, Image as ImageKonva} from 'react-konva';
 import Konva from 'konva';
 import PinchToZoom from 'react-pinch-and-zoom';
 import Hammer from 'react-hammerjs';
 
 const PDFJS = window.pdfjsLib;
+const url = 'https://koetsuki-dev.mosin.jp/koetsuki_roku_circlemap.pdf';
+
+let renderTask = null;
+
+const TIMES = 2;
+
 
 class Map extends Component {
     state = {
@@ -21,6 +27,8 @@ class Map extends Component {
         y: 0,
         prevX: 0,
         prevY: 0,
+        img: null,
+        canvas: null,
     }
 
     updateViewPort = (width, height) => {
@@ -35,6 +43,44 @@ class Map extends Component {
         return this.refs.layer.getContext('2d')._context;
     }
 
+    getResource = async () => {
+        if(!url) return;
+
+        if(/pdf$/.test(url)) {
+            const pdf = await PDFJS.getDocument(url);
+            const page = await pdf.getPage(1);
+            const cv = document.createElement('canvas');
+            const context = cv.getContext('2d');
+            const viewport = page.getViewport({ scale: TIMES});
+            const { width, height } = viewport;
+            viewport.width = width / TIMES;
+            viewport.height = height / TIMES;
+            cv.height = height;
+            cv.width = width;
+            this.updateViewPort(width, height);
+            await page.render({ canvasContext: context, viewport }).promise
+
+            const img = new Image();
+            img.onload = () => {
+                this.setState({
+                    img,
+                });
+            };
+            img.src = cv.toDataURL();
+        } else {
+            await new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => {
+                    this.setState({
+                        img,
+                    });
+                    resolve();
+                };
+                img.src = url;
+            });
+        }
+    }
+
     fillFavorites = resizeRatio => {
         const favorites = [[0, 0], [362, 1680], [386, 1831]];
 
@@ -47,120 +93,93 @@ class Map extends Component {
         for(const fav of favorites) {
             context.fillRect(...fav.concat(fillSize).map(v => v / resizeRatio));
         }
-
     }
 
-    renderCircleMap = () => {
-        const url = '';
-        //const url = 'https://koetsuki-dev.mosin.jp/circlemap-test.jpg';
-        if(!url) return;
-
-        if(/pdf$/.test(url)) {
-            PDFJS.getDocument(url).then(pdf => {
-                pdf.getPage(1).then(page => {
-                    const context = this.getContext();
-                    const viewport = page.getViewport(1);
-                    const { width, height } = viewport;
-                    this.updateViewPort(width, height);
-                    const renderTask = page.render({ canvasContext: context, viewport});
-                    renderTask.then(() => {
-                        this.fillFavorites(1);
-                    });
-                });
-            });
-        }else if(/jpg$/.test(url)) {
-            const img = new Image();
-            img.onload = () => {
-                const resizeRatio = 4;
-                const { width, height } =img;
-                const resizedWidth = width / resizeRatio, resizedHeight = height / resizeRatio;
-                this.updateViewPort(resizedWidth, resizedHeight);
-                process.nextTick(() => {
-                    const context = this.getContext();
-                    context.drawImage(img, 0, 0, width, height, 0, 0, resizedWidth, resizedHeight);
-
-                    this.fillFavorites(resizeRatio);
-
-                    if(width > window.innerWidth) {
-                        console.log('scale resized!');
-                        this.refs.layer.scaleX(window.innerWidth / width);
-                    }
-
-                    //this.setState({ text: 'img loaded!'});
-                });
-            };
-            img.src = url;
-        }
-    };
-
     componentDidMount() {
-        this.renderCircleMap();
+        this.getResource();
     }
 
     onPinch = e => {
-        const diff = this.state.startRatio / e.scale;
-        const newScale = this.state.prevScale  / diff;
-        this.setState({
+        const stage = this.refs.stage;
+        const oldScale = stage.scale();
+        const mousePointTo = {
+            x: e.center.x / oldScale.x - stage.x() / oldScale.x,
+            y: e.center.y / oldScale.y - stage.y() / oldScale.y,
+        };
+
+        const newScale = e.scale;
+
+        const newState = {
             scale: newScale,
-        });
-    };
+            x: -(mousePointTo.x - e.center.x / newScale) * newScale,
+            y: -(mousePointTo.y - e.center.y / newScale) * newScale
+        };
+        this.setState(newState);
+            };
 
-    onPinchStart = e => {
-        this.setState({
-            prevScale: this.state.scale,
-            startRatio: e.scale,
-            changingScale: true,
-        });
-    };
-
-    onPinchEnd = e => {
-        this.setState({
-            prevScale: e.scale,
-            scaleChanged: true,
-        });
-    }
-
-    onPanStart = e => {
-        /*
-        this.setState({
-            prevX: this.state.x,
-            prevY: this.state.y,
-            text: 'pan start!!',
-        });
-        */
-    };
-
-    onPan = e => {
-        if(this.state.changingScale) {
-            if(this.state.scaleChanged && !this.state.reseted) {
-                this.setState({ reseted: true});
-                setTimeout(() => {
-                    this.setState({
-                        changingScale: false,
-                        scaleChanged: false,
-                    });
-                }, 300);
-            }
-            return;
-        }
+    onPinchMove = e => {
         const { deltaX, deltaY } = e;
-        console.log(e);
-        console.log('Pan!');
         this.setState({
             x: this.state.prevX + deltaX,
             y: this.state.prevY + deltaY,
-            text: JSON.stringify(e, null, '    ')
         });
     };
 
-    onPanEnd = e => {
+
+    /*
+     * hammer.js onPinchStart event
+     */
+    onPinchStart = e => {
         this.setState({
             prevX: this.state.x,
             prevY: this.state.y
         });
     };
 
-    
+    /*
+     * hammer.js onPan event
+     */
+    onPan = e => {
+        const { deltaX, deltaY } = e;
+        this.setState({
+            x: this.state.prevX + deltaX,
+            y: this.state.prevY + deltaY,
+        });
+    };
+
+    /*
+     * hammer.js onPanEnd event
+     */
+    onPanStart = e => {
+        this.setState({
+            prevX: this.state.x,
+            prevY: this.state.y
+        });
+    };
+
+    /*
+     * React-Konva onWheel event
+     */
+    handleWheel = e => {
+        e.evt.preventDefault();
+
+        const scaleBy = 1.2;
+        const stage = e.target.getStage();
+        const oldScale = stage.scale();
+        const mousePointTo = {
+            x: stage.getPointerPosition().x / oldScale.x - stage.x() / oldScale.x,
+            y: stage.getPointerPosition().y / oldScale.y - stage.y() / oldScale.y,
+        };
+
+        const newScale = e.evt.deltaY > 0 ? oldScale.y / scaleBy : oldScale.y * scaleBy;
+
+        this.setState({
+            scale: newScale,
+            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+        });
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -172,30 +191,28 @@ class Map extends Component {
             }
         };
 
+        const { img } = this.state;
+
+        if(!img) return null;
 
         return (
-            <Hammer
-                onTap={this.onTap}
+        <Hammer
+            onPinch={this.onPinch}
+            onPinchStart={this.onPinchStart}
+            onPinchMove={this.onPinchMove}
 
-                onPinch={this.onPinch}
-                onPinchStart={this.pinchStart}
-                onPinchEnd={this.pinchEnd}
+            onPan={this.onPan}
+            onPanStart={this.onPanStart}
 
-                onPan={this.onPan}
-                onPanStart={this.onPanStart}
-                onPanEnd={this.onPanEnd}
-
-                options={options}>
-                <div>
-                    <Stage  scale={{ x: this.state.scale, y: this.state.scale }} width={this.state.mapWidth} height={this.state.mapHeight}>
-                        {/*<Layer ref="layer" _useStrictMode />*/}
-                        <Layer x={this.state.x} y={this.state.y}>
-                            <Text text={this.state.text}/>
-                        </Layer>
-                    </Stage>
-                </div>
-            </Hammer>
-
+            options={options}>
+            <div>
+                <Stage ref="stage" onWheel={this.handleWheel} scale={{ x: this.state.scale, y: this.state.scale }}x={this.state.x} y={this.state.y} width={this.state.mapWidth} height={this.state.mapHeight}>
+                    <Layer>
+                        <ImageKonva image={this.state.img}  space="fill"/>
+                    </Layer>
+                </Stage>
+            </div>
+        </Hammer>
         );
     }
 };
