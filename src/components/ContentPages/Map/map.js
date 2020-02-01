@@ -37,8 +37,9 @@ class Map extends Component {
         if(this.state.mapWidth === width && this.state.mapHeight === height) return;
         this.setState({
             //mapWidth: width,
-            mapWidth: window.innerWidth,
-            mapHeight: height
+            mapWidth: window.innerWidth - 16,
+            //mapHeight: height
+            //mapHeight: window.innerHeight - 130,
         });
     };
 
