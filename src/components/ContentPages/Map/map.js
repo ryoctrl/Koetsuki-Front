@@ -4,7 +4,7 @@ import Konva from 'konva';
 import Hammer from 'react-hammerjs';
 
 const PDFJS = window.pdfjsLib;
-const url = 'https://koetsuki.mosin.jp/koetsuki_roku_circlemap.pdf';
+const url = '/koetsuki_roku_circlemap.pdf';
 
 const TIMES = 3;
 
