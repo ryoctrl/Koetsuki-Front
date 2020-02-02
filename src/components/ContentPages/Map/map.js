@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Text, Image as ImageKonva} from 'react-konva';
+import { Stage, Layer, Image as ImageKonva} from 'react-konva';
 import Konva from 'konva';
-import PinchToZoom from 'react-pinch-and-zoom';
 import Hammer from 'react-hammerjs';
 
 const PDFJS = window.pdfjsLib;
 const url = 'https://koetsuki-dev.mosin.jp/koetsuki_roku_circlemap.pdf';
-
-let renderTask = null;
 
 const TIMES = 3;
 
@@ -178,8 +175,6 @@ class Map extends Component {
     }
 
     render() {
-        const { classes } = this.props;
-
         const options = {
             recognizers: {
                 pinch: {
