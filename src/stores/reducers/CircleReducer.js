@@ -16,13 +16,6 @@ const getRecentUpdate = circle => {
 
     goodsUpdatedAt.push(updatedAt);
 
-    if(goodsUpdatedAt.length > 1) {
-        console.log('Below');
-        console.log(goodsUpdatedAt);
-        console.log(goodsUpdatedAt.slice().sort((a, b) => b - a));
-        console.log(goodsUpdatedAt.slice().sort((a, b) => b - a));
-    }
-
     return goodsUpdatedAt.sort((a, b) => b - a)[0];
 };
 
