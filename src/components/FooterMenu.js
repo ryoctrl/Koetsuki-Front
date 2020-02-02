@@ -13,7 +13,9 @@ const styles = {
         width: '100%',
         bottom: 0,
         left: 0,
-        right: 0
+        right: 0,
+        paddingBottom: 'constant(safe-area-inset-bottom)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
     }
 }
 
