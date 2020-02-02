@@ -10,6 +10,22 @@ const initState = {
     circles: [],
 };
 
+const getRecentUpdate = circle => {
+    const updatedAt = new Date(circle.updatedAt);
+    const goodsUpdatedAt = circle.goods.map(({ updatedAt }) => new Date(updatedAt));
+
+    goodsUpdatedAt.push(updatedAt);
+
+    if(goodsUpdatedAt.length > 1) {
+        console.log('Below');
+        console.log(goodsUpdatedAt);
+        console.log(goodsUpdatedAt.slice().sort((a, b) => b - a));
+        console.log(goodsUpdatedAt.slice().sort((a, b) => b - a));
+    }
+
+    return goodsUpdatedAt.sort((a, b) => b - a)[0];
+};
+
 const circles = (state=[initState], action) => {
     switch(action.type) {
         case GET_CIRCLES_REQUEST:
@@ -84,7 +100,11 @@ const searchCircle = (state, action) => {
             algo = (a, b) => options.sortLogic === 'asc' ? a.id - b.id : b.id - a.id;
             break;
         case 'updatedAt':
-            algo = (a, b) => options.sortLogic === 'asc' ? new Date(a.updatedAt) - new Date(b.updatedAt) : new Date(b.updatedAt) - new Date(a.updatedAt);
+            algo = (a, b) => {
+                const aRecentUpdate = getRecentUpdate(a);
+                const bRecentUpdate = getRecentUpdate(b);
+                return options.sortLogic === 'asc' ? aRecentUpdate - bRecentUpdate : bRecentUpdate - aRecentUpdate;
+            }
             break;
         case 'name':
             algo = (a, b) => {
