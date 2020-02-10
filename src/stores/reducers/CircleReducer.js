@@ -5,9 +5,18 @@ import {
     SEARCH_CIRCLE,
 } from '../actions/CircleAction';
 
+const initOptions = {
+    name: '',
+    penName: '',
+    space: '',
+    sortTarget: 'space',
+    sortLogic: 'asc',
+}
+
 const initState = {
     isFetching: false,
     circles: [],
+    options: initOptions,
 };
 
 const getRecentUpdate = circle => {
@@ -39,13 +48,17 @@ const circles = (state=[initState], action) => {
                     }
                 });
             });
-            return [
-                {
-                    isFetching: false,
-                    circles: action.circles,
-                    lastUpdated: action.receivedAt
-                }
-            ];
+            const newState = {
+                isFetching: false,
+                circles: action.circles,
+                lastUpdated: action.receivedAt
+            };
+
+            if(state.length > 0 && state[0].results) {
+                newState.results = state[0].results;
+            }
+
+            return [newState];
         case GET_CIRCLES_FAILURE:
             return [
                 ...state,
@@ -176,7 +189,8 @@ const searchCircle = (state, action) => {
             isFetching: false,
             circles: circles,
             results: results,
-            lastUpdated: prevState.lastUpdated
+            lastUpdated: prevState.lastUpdated,
+            options
         }
     ]
 };
