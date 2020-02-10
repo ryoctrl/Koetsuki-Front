@@ -6,6 +6,7 @@ import { orange/*, green, pink, blue, yellow */} from '@material-ui/core/colors'
 import { connect } from 'react-redux';
 import CircleMapper from '~/src/stores/mappers/CircleMapper';
 import { checkAuth } from '~/src/stores/actions/UserAction';
+import Img from 'react-image';
 
 
 class Settings extends Component {
@@ -25,6 +26,7 @@ class Settings extends Component {
         const { classes } = this.props;
         return (
             <div>
+                <Img className={classes.topImage} src="https://koetsuki.mosin.jp/api/images/top.jpg"/>
                 <Typography variant="h6" align="center" className={classes.messages}>
                     - Twitter -
                 </Typography>
@@ -70,10 +72,19 @@ class Settings extends Component {
                     - Special Thanks -
                 </Typography>
                 <Typography variant="body" align="center" className={classes.messages}>
-                    No Image 画像提供
+                    アプリイメージ・No Image 画像提供
+                </Typography>
+                <Typography variant="h5" align="center" className={classes.messages}>
+                    ミルキャラ様(<a className={classes.aLink} href="https://twitter.com/milcara">@milcara</a>)
                 </Typography>
                 <Typography variant="h6" align="center" className={classes.messages}>
-                    ミルキャラ様(<a className={classes.aLink} href="https://twitter.com/milcara">@milcara</a>)
+                    - アンケートのお願い -
+                </Typography>
+                <Typography variant="body" aign="center" className={classes.messagesCenter}>
+                    <a href="https://forms.gle/HfSD9eQhWa3ix9Rt6">一般参加者様向けアンケート</a>
+                </Typography>
+                <Typography variant="body" fontWeight="fontWeightBold" aign="center" className={classes.messagesCenter}>
+                    <a href="https://forms.gle/MnNKsz7G6RVjfvBa6">サークル主様向けアンケート</a>
                 </Typography>
             </div>
         )
@@ -81,8 +92,20 @@ class Settings extends Component {
 }
 
 const styles = theme => ({
+    topImage: {
+        display: 'block',
+        margin: '0 auto',
+        width: '100%',
+        [theme.breakpoints.up('lg')]: {
+            width: '45vw',
+        },
+    },
     messages: {
         padding: theme.spacing.unit,
+    },
+    messagesCenter: {
+        padding: theme.spacing.unit,
+        textAlign: 'center',
     },
     button: {
         background: '#1da1f2',
